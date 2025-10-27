@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FTSE 100 Opportunity Monitor</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="app">
+      <header class="app__header">
+        <div>
+          <h1>FTSE 100 Opportunity Monitor</h1>
+          <p>
+            Track live FTSE 100 movements, discover news driven catalysts, and
+            surface actionable trading signals.
+          </p>
+        </div>
+        <section class="config">
+          <h2>Data Sources</h2>
+          <div class="config__row">
+            <label for="alphaKey">Alpha Vantage API key</label>
+            <input id="alphaKey" type="password" placeholder="Enter your key" />
+          </div>
+          <div class="config__row">
+            <label for="refreshInterval">Refresh every</label>
+            <select id="refreshInterval">
+              <option value="60">1 minute</option>
+              <option value="180">3 minutes</option>
+              <option value="300" selected>5 minutes</option>
+              <option value="600">10 minutes</option>
+            </select>
+          </div>
+          <button id="startMonitoring">Start monitoring</button>
+          <p class="config__hint">
+            Uses <a href="https://www.alphavantage.co/" target="_blank">Alpha
+            Vantage</a> for quotes and news sentiment. Create a free API key and
+            paste it above.
+          </p>
+        </section>
+      </header>
+
+      <main class="layout">
+        <section class="panel">
+          <div class="panel__header">
+            <h2>Market Heatmap</h2>
+            <span id="lastUpdated" class="meta">–</span>
+          </div>
+          <div id="heatmap" class="heatmap"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__header">
+            <h2>Opportunity Alerts</h2>
+            <div class="thresholds">
+              <label>
+                Δ% threshold
+                <input id="changeThreshold" type="number" value="2" step="0.5" />
+              </label>
+              <label>
+                Sentiment threshold
+                <input id="sentimentThreshold" type="number" value="0.2" step="0.1" />
+              </label>
+            </div>
+          </div>
+          <div id="alerts" class="alerts"></div>
+        </section>
+
+        <section class="panel panel--wide">
+          <div class="panel__header">
+            <h2>Ticker Detail</h2>
+            <span id="selectedTicker" class="meta">Select a ticker</span>
+          </div>
+          <div class="detail">
+            <div class="detail__chart">
+              <canvas id="priceChart"></canvas>
+            </div>
+            <div class="detail__info">
+              <h3>Latest News &amp; Sentiment</h3>
+              <ul id="newsList" class="news"></ul>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="app__footer">
+        <p>
+          Data courtesy of Alpha Vantage. Signals are heuristic and should be
+          validated before trading.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
